@@ -16,7 +16,31 @@ The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel
 Research Method
 ===============
 
-* Dataset Details
+The dataset contains of 32 rows on 11 variables name below :-
+
+1. mpg: Miles per US gallon
+2. cyl: Number of cylinders
+3. disp: Displacement (cc)
+4. hp: Raw Horsepower
+5. drat: Rear axle ratio
+6. wt: Weight (lb / 1000)
+7. qsec: 1/4 mile time in sec
+8. vs: V engine or Straight engine
+9. am: Transmission (0 = automatic, 1 = manual)
+10. gear: Number of gears
+11. carb: Number of carburetors
+
+Details records of the dataset
+
+```{r}
+unique(mtcars)
+```
+
+Research Questions
+===============
+
+* <b>"Is an automatic or manual transmission better for MPG"</b>
+
 
 Summary for all cars
 
@@ -36,30 +60,12 @@ Summary for manual type cars
 summary(mtcars[mtcars$am==1,])
 ```
 
-```{r}
-unique(mtcars)
-```
-The dataset contains of 32 rows on 11 variables name below :-
+We found that the mean for MPG for manual cars is bigger than automatic which is [ 24.39 > 17.15 ].
+Further investigation needed to be done to verify this . 
 
-1. mpg: Miles per US gallon
-2. cyl: Number of cylinders
-3. disp: Displacement (cc)
-4. hp: Raw Horsepower
-5. drat: Rear axle ratio
-6. wt: Weight (lb / 1000)
-7. qsec: 1/4 mile time in sec
-8. vs: V engine or Straight engine
-9. am: Transmission (0 = automatic, 1 = manual)
-10. gear: Number of gears
-11. carb: Number of carburetors
+* <b>"Quantify the MPG difference between automatic and manual transmissions"</b>
 
-
-Research Questions
-===============
-
-* <b>"Is an automatic or manual transmission better for MPG"</b>
-
-We found that the mean for MPG for manual cars is bigger than automatic which is [ 24.39 > 17.15 ]. Further investigation need to be done to verify this . 
+ 
 By plotting into BoxPlot we can have more info
 
 ```{r}
@@ -70,8 +76,63 @@ boxplot(mpg ~ am, data = mtcars, col=(c("gold","darkgreen")),
 
 it proves that manual = 1 transmission is higher mpg mean than automatic = 0
 
+We need to do the hypothesis testing to prove this
 
-* <b>"Quantify the MPG difference between automatic and manual transmissions"</b>
+```{r}
+aggregate(mpg~am, data = mtcars, mean)
+```
+
+The mean transmission for manuals is 24.39 mpg which is 7.24 mpg higher than automatic which is 17.15 mpg
+
+We want to test and to determine is there any significant between this. Student TTest can be used to achive this.
+
+```{r}
+a <- mtcars[mtcars$am == 0,]
+m <- mtcars[mtcars$am == 1,]
+t.test(a$mpg, m$mpg)
+
+```
+
+With the pValue = 0.001374 , we reject the NULL hypothesis. There is a difference between the mpg for auto and manual transmission.
+
+We try to fit the data into the linear model to check the variance 
+
+```{r}
+m<-lm(mpg~am,data=mtcars)
+summary(m)
+
+```
+
+We found that the R-Squared = 0.3598 , so we can assume the model only can be trusted for 36% of variance.
+
+We also want to analyze the differences between the group means and their association.We put the dataset into the model and compared it with the Anova
+
+```{r}
+model <- lm(mpg~am + wt + hp + cyl, data = mtcars)
+anova(m,model)
+
+```
+
+The model finally can be summarized below :- 
+
+```{r}
+summary(model)
+
+```
+
+
+Conclusion
+===============
+
+The model clearly explains with the 84.9%  of variance that on average the manual transmission will have more 1.47805 more mpg than the automatic transmission.
+
+We also found that the residuals were normally distributed.
+
+```{r}
+plot(model)
+
+```
+
 
 
 
