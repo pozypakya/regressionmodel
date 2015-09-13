@@ -1,9 +1,9 @@
 ---
 output: pdf_document
 ---
-# Research : What is Transmission Effects on Fuel Efficiency ?
+# Analysis on Transmission Effects vs. Fuel Efficiency ?
 
-Overview
+Executive Summary
 ========
 
 You work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
@@ -13,7 +13,7 @@ You work for Motor Trend, a magazine about the automobile industry. Looking at a
 
 The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973-74 models).
 
-Research Method
+Dataset details
 ===============
 
 The dataset contains of 32 rows on 11 variables name below :-
@@ -105,7 +105,7 @@ summary(m)
 
 We found that the R-Squared = 0.3598 , so we can assume the model only can be trusted for 36% of variance.
 
-We also want to analyze the differences between the group means and their association.We put the dataset into the model and compared it with the Anova
+We also want to analyze the differences between the group means and their association.We put the dataset into the model and compared it using Anova
 
 ```{r}
 model <- lm(mpg~am + wt + hp + cyl, data = mtcars)
@@ -128,6 +128,9 @@ The model clearly explains with the 84.9%  of variance that on average the manua
 
 We also found that the residuals were normally distributed.
 
+
+Appendix
+===============
 ```{r}
 plot(model)
 

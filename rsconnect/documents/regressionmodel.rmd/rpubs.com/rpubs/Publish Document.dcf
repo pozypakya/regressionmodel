@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/108756/74999847c472442384c50ca382b15dde
+url: http://rpubs.com/akunyer/108756/edit
+when: 1442155065.03805
